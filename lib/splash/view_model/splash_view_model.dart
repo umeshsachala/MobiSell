@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mobisell/core/navigation/navigator.dart';
 import 'package:mobisell/screens/get_started/get_started_view.dart';
 
+import '../../screens/Onboarding/onboarding_screen.dart';
+
 class SplashViewModel with ChangeNotifier {
   BuildContext? context;
   bool _isLoading = true;
@@ -21,7 +23,7 @@ class SplashViewModel with ChangeNotifier {
     notifyListeners();
     
     if (context != null) {
-      Navigation.pushReplacement(context!, const GetStartedView());
+      Navigation.pushReplacement(context!,  OnboardingScreen());
     }
   }
 }
