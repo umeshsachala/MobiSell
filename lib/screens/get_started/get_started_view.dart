@@ -5,6 +5,9 @@ import 'package:mobisell/utils/local_images/local_images.dart';
 import 'package:mobisell/utils/text_style/text_style.dart';
 import 'package:mobisell/utils/common_widgets/common_button.dart';
 
+import '../../core/navigation/navigator.dart' show Navigation;
+import '../signin/sign_in_view.dart' show ShopOwnerSignIn;
+
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});
 
@@ -75,7 +78,9 @@ class GetStartedView extends StatelessWidget {
                       textColor: AppColors.black,
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.w600,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigation.pushReplacement(context!,  ShopOwnerSignIn());
+                      },
                     ),
                     SizedBox(height: size.height * 0.02),
                     CommonButton(

@@ -78,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               options: CarouselOptions(
                 height: 500,
-                autoPlay: true,
+                autoPlay: false,
                 enlargeCenterPage: true,
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(images.length, (index) {
               return AnimatedContainer(
-                duration: Duration(milliseconds: 300),
+                duration: Duration(milliseconds: 20),
                 margin: EdgeInsets.symmetric(horizontal: 4),
                 width: _currentIndex == index ? 14 : 8,
                 height: 8,
