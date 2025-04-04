@@ -10,68 +10,88 @@ class GetStartedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final padding = MediaQuery.of(context).padding;
+    
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 35.0) +
-            EdgeInsets.only(bottom: 26),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 168),
-            Text(
-              AppStrings.getstarted,
-              style: CommonStyle.getInterFont(
-                fontSize: 40,
-                fontWeight: FontWeight.w800,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.08,
+            vertical: size.height * 0.02,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: size.height * 0.05),
+              Text(
+                AppStrings.getstarted,
+                style: CommonStyle.getInterFont(
+                  fontSize: size.width * 0.1, // Responsive font size
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              AppStrings.getstartedDescription,
-              style: CommonStyle.getInterFont(),
-            ),
-            SizedBox(height: 80,),
-            Container(
-              width: double.infinity,
-              height: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(500),
-                color: Colors.grey,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 20,
-                    spreadRadius: 5,
+              SizedBox(height: size.height * 0.02),
+              Text(
+                AppStrings.getstartedDescription,
+                style: CommonStyle.getInterFont(
+                  fontSize: size.width * 0.04, // Responsive font size
+                ),
+              ),
+              SizedBox(height: size.height * 0.04),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size.width * 0.2),
+                    color: Colors.grey,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 20,
+                        spreadRadius: 5,
+                      ),
+                    ],
                   ),
-                ],
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(size.width * 0.2),
+                    child: Image.asset(
+                      LocalImages.getStartedImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
-              child: Builder(
-                builder: (context) {
-                  return Image.asset(LocalImages.getStartedImage,fit: BoxFit.cover,);
-                },
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CommonButton(
+                      text: AppStrings.shopOwner,
+                      backgroundColor: AppColors.white,
+                      textColor: AppColors.black,
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.w600,
+                      onPressed: () {},
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    CommonButton(
+                      text: AppStrings.customer,
+                      backgroundColor: AppColors.grey,
+                      textColor: AppColors.white,
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.w600,
+                      onPressed: () {},
+                    ),
+                    SizedBox(height: padding.bottom + size.height * 0.02),
+                  ],
+                ),
               ),
-            ),
-            Spacer(),
-            CommonButton(
-              text: AppStrings.shopOwner,
-              backgroundColor: AppColors.white,
-              textColor: AppColors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              onPressed: () {},
-            ),
-            SizedBox(height: 16),
-            CommonButton(
-              text: AppStrings.customer,
-              backgroundColor: AppColors.grey,
-              textColor: AppColors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              onPressed: () {},
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
