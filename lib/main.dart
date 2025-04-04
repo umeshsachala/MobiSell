@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobisell/screens/app/app_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white, // Change to any color
+    statusBarIconBrightness: Brightness.dark, // Use Brightness.light for white icons
+  ));
   runApp(const AppView());
 }
 

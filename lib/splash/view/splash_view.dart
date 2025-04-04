@@ -62,7 +62,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                       return Opacity(
                         opacity: _animation.value,
                         child: Image.asset(
-                          LocalImages.AppLogo,
+                          LocalImages.appLogo,
                           width: double.infinity,
                           fit: BoxFit.contain,
                         ),
