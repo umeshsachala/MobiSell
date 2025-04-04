@@ -84,7 +84,9 @@ class GetStartedView extends StatelessWidget {
                       textColor: AppColors.white,
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.w600,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
                     ),
                     SizedBox(height: padding.bottom + size.height * 0.02),
                   ],

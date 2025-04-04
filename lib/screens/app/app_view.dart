@@ -5,6 +5,8 @@ import 'package:mobisell/screens/home/home_view.dart';
 import 'package:mobisell/splash/view/splash_view.dart';
 import 'package:mobisell/screens/get_started/get_started_view.dart';
 import 'package:mobisell/screens/get_started/get_started_view_model.dart';
+import 'package:mobisell/screens/login/login_view.dart';
+import 'package:mobisell/screens/login/login_view_model.dart';
 import 'package:provider/provider.dart';
 
 
@@ -25,6 +27,13 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     appContext = context;
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -34,18 +43,14 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
       value: _app,
       child: Consumer<AppModel>(
         builder: (context, value, child) {
-          value.isLoading = false;
-          if (value.isLoading) {
-            return Container(
-              color: Theme.of(context).colorScheme.background,
-            );
-          }
           return MultiProvider(
             providers: [
               ChangeNotifierProvider<SplashViewModel>(
                   create: (_) => SplashViewModel()),
               ChangeNotifierProvider<GetStartedViewModel>(
                   create: (_) => GetStartedViewModel()),
+              ChangeNotifierProvider<LoginViewModel>(
+                  create: (_) => LoginViewModel()),
             ],
             child: MaterialApp(
               navigatorKey: GlobalKey<NavigatorState>(),
@@ -54,8 +59,10 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
               debugShowCheckedModeBanner: false,
               home: const SplashView(),
               routes: {
+                '/splash': (context) => const SplashView(),
                 '/get_started': (context) => const GetStartedView(),
                 '/home': (context) => const HomeView(),
+                '/login': (context) => const LoginView(),
               },
               builder: (BuildContext context, Widget? child) {
                 final MediaQueryData data = MediaQuery.of(context);
@@ -63,10 +70,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
                     data: data.copyWith(textScaler: const TextScaler.linear(1)),
                     child: child ?? const SizedBox());
               },
-              // home: const LoginView(),
-              // routes: const <String, WidgetBuilder>{},
-              // title: AppStrings.appName,
-              // navigatorObservers: [routeObserver],
+              navigatorObservers: [routeObserver],
             ),
           );
         },

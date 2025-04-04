@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobisell/core/navigation/navigator.dart';
+import 'package:mobisell/screens/Onboarding/onboarding_screen.dart';
 import 'package:mobisell/screens/get_started/get_started_view.dart';
-
-import '../../screens/Onboarding/onboarding_screen.dart';
 
 class SplashViewModel with ChangeNotifier {
   BuildContext? context;
