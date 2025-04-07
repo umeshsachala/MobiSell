@@ -15,7 +15,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<String> images = [
     'assets/images/6183575_3026173-removebg-preview.png',
     'assets/images/onbonading 2.png',
-    'assets/images/12849238_1_Coffee-1-removebg-preview.png',
+    'assets/images/onbnding 4.png',
   ];
 
   final List<String> titles = [

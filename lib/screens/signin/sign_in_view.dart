@@ -38,42 +38,45 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
   void _showImagePicker() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Container(
-        padding: EdgeInsets.all(10),
-        height: 180,
-        child: Column(
-          children: [
-            Text("Choose Image Source", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ListTile(
-              leading: Icon(Icons.camera_alt),
-              title: Text("Camera"),
-              onTap: () async {
-                Navigator.pop(context);
-                final pickedFile = await _picker.pickImage(source: ImageSource.camera, imageQuality: 80);
-                if (pickedFile != null) {
-                  setState(() {
-                    if (_shopPhotos.length < 6) {
-                      _shopPhotos.add(File(pickedFile.path));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("You can select up to 6 images only!")),
-                      );
+      builder: (context) =>
+          Container(
+            padding: EdgeInsets.all(10),
+            height: 180,
+            child: Column(
+              children: [
+                //  Text("Choose Image Source", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ListTile(
+                  leading: Icon(Icons.camera_alt),
+                  title: Text("Camera"),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final pickedFile = await _picker.pickImage(
+                        source: ImageSource.camera, imageQuality: 80);
+                    if (pickedFile != null) {
+                      setState(() {
+                        if (_shopPhotos.length < 6) {
+                          _shopPhotos.add(File(pickedFile.path));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(
+                                "You can select up to 6 images only!")),
+                          );
+                        }
+                      });
                     }
-                  });
-                }
-              },
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.image),
+                  title: Text("Gallery"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImages(ImageSource.gallery);
+                  },
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.image),
-              title: Text("Gallery"),
-              onTap: () {
-                Navigator.pop(context);
-                _pickImages(ImageSource.gallery);
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 
@@ -101,13 +104,14 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
     }
   }
 
-  Widget _buildTextField({required TextEditingController controller, required String label, bool isPassword = false, TextInputType? keyboardType}) {
+  Widget _buildTextField(
+      {required TextEditingController controller, required String label, bool isPassword = false, TextInputType? keyboardType}) {
     return Container(
       margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.black87),
       ),
       child: TextFormField(
         controller: controller,
@@ -134,96 +138,118 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
         centerTitle: false,
         backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTextField(controller: _nameController, label: "Owner Name"),
-                _buildTextField(controller: _phoneController, label: "Phone Number", keyboardType: TextInputType.phone),
-                _buildTextField(controller: _emailController, label: "Email ID", keyboardType: TextInputType.emailAddress),
-                _buildTextField(controller: _passwordController, label: "Password", isPassword: true),
-                _buildTextField(controller: _shopNameController, label: "Shop Name"),
-                _buildTextField(controller: _shopAddressController, label: "Shop Address"),
-
-                SizedBox(height: 16),
-                Text("Shop Photos", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-
-                GestureDetector(
-                  onTap: _showImagePicker,
-                  child: _shopPhotos.isEmpty
-                      ? Container(
-                    height: 130,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(child: Text("Upload Shop Photos")),
-                  )
-                      : GridView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: _shopPhotos.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                    ),
-                    itemBuilder: (context, index) => Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            _shopPhotos[index],
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                          top: 5,
-                          right: 5,
-                          child: GestureDetector(
-                            onTap: () => _deletePhoto(index),
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(Icons.close, color: Colors.white, size: 18),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 24),
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: _submitForm,
-                    child: Text("Sign In", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.22,
+              child: Image.asset(
+                'assets/images/background image.png',
+                // Make sure the image is added in assets
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.all(11.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTextField(
+                        controller: _nameController, label: "Owner Name"),
+                    _buildTextField(controller: _phoneController,
+                        label: "Phone Number",
+                        keyboardType: TextInputType.phone),
+                    _buildTextField(controller: _emailController,
+                        label: "Email ID",
+                        keyboardType: TextInputType.emailAddress),
+                    _buildTextField(controller: _passwordController,
+                        label: "Password",
+                        isPassword: true),
+                    _buildTextField(
+                        controller: _shopNameController, label: "Shop Name"),
+                    _buildTextField(controller: _shopAddressController,
+                        label: "Shop Address"),
+                    SizedBox(height: 5),
+                    GestureDetector(
+                      onTap: _showImagePicker,
+                      child: _shopPhotos.isEmpty
+                          ? Container(
+                        height: 110,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(child: Text("Upload Shop Photos")),
+                      )
+                          : GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _shopPhotos.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemBuilder: (context, index) =>
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.file(
+                                    _shopPhotos[index],
+                                    height: 80,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 2,
+                                  right: 2,
+                                  child: GestureDetector(
+                                    onTap: () => _deletePhoto(index),
+                                    child: Container(
+                                      padding: EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                          Icons.close, color: Colors.white,
+                                          size: 18),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.maxFinite,
+                      height: 55,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: _submitForm,
+                        child: Text("Sign In", style: TextStyle(fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
