@@ -6,7 +6,8 @@ import 'package:mobisell/utils/text_style/text_style.dart';
 import 'package:mobisell/utils/common_widgets/common_button.dart';
 
 import '../../core/navigation/navigator.dart' show Navigation;
-import '../signin/sign_in_view.dart' show ShopOwnerSignIn;
+import '../owner/signin/sign_in_view.dart';
+
 
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});

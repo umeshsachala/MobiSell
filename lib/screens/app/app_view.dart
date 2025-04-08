@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobisell/screens/app/app_view_model.dart';
 import 'package:mobisell/splash/view_model/splash_view_model.dart';
-import 'package:mobisell/screens/home/home_view.dart';
 import 'package:mobisell/splash/view/splash_view.dart';
 import 'package:mobisell/screens/get_started/get_started_view.dart';
 import 'package:mobisell/screens/get_started/get_started_view_model.dart';
-import 'package:mobisell/screens/login/login_view.dart';
-import 'package:mobisell/screens/login/login_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../coustmer/home/home_view.dart';
+import '../coustmer/login/login_view.dart';
+import '../coustmer/login/login_view_model.dart';
 
 
 class AppView extends StatefulWidget {

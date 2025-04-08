@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobisell/core/navigation/navigator.dart';
-import 'package:mobisell/screens/home/home_view.dart';
+
+import '../coustmer/home/home_view.dart';
+
 
 class GetStartedViewModel extends ChangeNotifier {
   BuildContext? context;
