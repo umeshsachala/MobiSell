@@ -6,6 +6,7 @@ import 'package:mobisell/utils/text_style/text_style.dart';
 import 'package:mobisell/utils/common_widgets/common_button.dart';
 
 import '../../core/navigation/navigator.dart' show Navigation;
+import '../owner/Login/login_view.dart';
 import '../owner/signin/sign_in_view.dart';
 
 
@@ -80,7 +81,7 @@ class GetStartedView extends StatelessWidget {
                       fontSize: size.width * 0.04,
                       fontWeight: FontWeight.w600,
                       onPressed: () {
-                        Navigation.pushReplacement(context!,  ShopOwnerSignIn());
+                        Navigation.pushReplacement(context!,  LoginScreen());
                       },
                     ),
                     SizedBox(height: size.height * 0.02),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobisell/core/navigation/navigator.dart';
 
-import '../../owner/home/home_view.dart';
+import '../home/home_view.dart';
+
+
 
 
 class LoginViewModel extends ChangeNotifier {

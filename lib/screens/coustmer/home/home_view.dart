@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobisell/screens/coustmer/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../owner/home/home_view_model.dart';
+import '../../../core/navigation/navigator.dart';
+import '../../get_started/get_started_view.dart';
 
 
 class HomeView extends StatelessWidget {
@@ -17,6 +19,12 @@ class HomeView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Home'),
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigation.push(context, const GetStartedView());
+                },
+              ),
             ),
             body: Center(
               child: Text(

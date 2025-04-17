@@ -5,8 +5,8 @@ import 'package:mobisell/screens/app/app_view.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.white, // Change to any color
-    statusBarIconBrightness: Brightness.dark, // Use Brightness.light for white icons
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
   ));
   runApp(const AppView());
 }
@@ -15,6 +15,8 @@ void main() {
 // import 'package:flutter/material.dart';
 //
 // void main() {
+
+
 //   runApp(const MyApp());
 // }
 //

@@ -79,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               options: CarouselOptions(
                 height: 500,
                 autoPlay: false,
-                enlargeCenterPage: true,
+                enlargeCenterPage: false,
                 onPageChanged: (index, reason) {
                   setState(() {
                     _currentIndex = index;
@@ -134,6 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           SizedBox(height: 40),
         ],
+
       ),
     );
   }

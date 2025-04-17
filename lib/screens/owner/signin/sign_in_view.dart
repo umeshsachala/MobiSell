@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobisell/core/navigation/navigator.dart';
 
 import '../../coustmer/home/home_view.dart';
+import '../../get_started/get_started_view.dart' show GetStartedView;
+import '../Dashboard/Dashboard_view.dart';
 
 class ShopOwnerSignIn extends StatefulWidget {
   @override
@@ -40,8 +43,8 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
   void _showImagePicker() {
     showModalBottomSheet(
       context: context,
-      builder: (context) =>
-          Container(
+      builder:
+          (context) => Container(
             padding: EdgeInsets.all(10),
             height: 180,
             child: Column(
@@ -53,15 +56,20 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
                   onTap: () async {
                     Navigator.pop(context);
                     final pickedFile = await _picker.pickImage(
-                        source: ImageSource.camera, imageQuality: 80);
+                      source: ImageSource.camera,
+                      imageQuality: 80,
+                    );
                     if (pickedFile != null) {
                       setState(() {
                         if (_shopPhotos.length < 6) {
                           _shopPhotos.add(File(pickedFile.path));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "You can select up to 6 images only!")),
+                            SnackBar(
+                              content: Text(
+                                "You can select up to 6 images only!",
+                              ),
+                            ),
                           );
                         }
                       });
@@ -106,8 +114,12 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
     }
   }
 
-  Widget _buildTextField(
-      {required TextEditingController controller, required String label, bool isPassword = false, TextInputType? keyboardType}) {
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    bool isPassword = false,
+    TextInputType? keyboardType,
+  }) {
     return Container(
       margin: EdgeInsets.only(bottom: 12),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -119,10 +131,7 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
         controller: controller,
         keyboardType: keyboardType,
         obscureText: isPassword,
-        decoration: InputDecoration(
-          labelText: label,
-          border: InputBorder.none,
-        ),
+        decoration: InputDecoration(labelText: label, border: InputBorder.none),
         validator: (value) => value!.isEmpty ? "Enter $label" : null,
       ),
     );
@@ -133,12 +142,15 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          "Sign In",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text("Sign In", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: false,
         backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigation.push(context, const GetStartedView());
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -161,74 +173,94 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTextField(
-                        controller: _nameController, label: "Owner Name"),
-                    _buildTextField(controller: _phoneController,
-                        label: "Phone Number",
-                        keyboardType: TextInputType.phone),
-                    _buildTextField(controller: _emailController,
-                        label: "Email ID",
-                        keyboardType: TextInputType.emailAddress),
-                    _buildTextField(controller: _passwordController,
-                        label: "Password",
-                        isPassword: true),
+                      controller: _nameController,
+                      label: "Owner Name",
+                    ),
                     _buildTextField(
-                        controller: _shopNameController, label: "Shop Name"),
-                    _buildTextField(controller: _shopAddressController,
-                        label: "Shop Address"),
+                      controller: _phoneController,
+                      label: "Phone Number",
+                      keyboardType: TextInputType.phone,
+                    ),
+                    _buildTextField(
+                      controller: _emailController,
+                      label: "Email ID",
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    _buildTextField(
+                      controller: _passwordController,
+                      label: "Password",
+                      isPassword: true,
+                    ),
+                    _buildTextField(
+                      controller: _shopNameController,
+                      label: "Shop Name",
+                    ),
+                    _buildTextField(
+                      controller: _shopAddressController,
+                      label: "Shop Address",
+                    ),
                     SizedBox(height: 5),
                     GestureDetector(
                       onTap: _showImagePicker,
-                      child: _shopPhotos.isEmpty
-                          ? Container(
-                        height: 110,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(child: Text("Upload Shop Photos")),
-                      )
-                          : GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: _shopPhotos.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                        ),
-                        itemBuilder: (context, index) =>
-                            Stack(
-                              children: [
-                                ClipRRect(
+                      child:
+                          _shopPhotos.isEmpty
+                              ? Container(
+                                height: 110,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Image.file(
-                                    _shopPhotos[index],
-                                    height: 80,
-                                    width: 80,
-                                    fit: BoxFit.cover,
-                                  ),
                                 ),
-                                Positioned(
-                                  top: 2,
-                                  right: 2,
-                                  child: GestureDetector(
-                                    onTap: () => _deletePhoto(index),
-                                    child: Container(
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Icon(
-                                          Icons.close, color: Colors.white,
-                                          size: 18),
+                                child: Center(
+                                  child: Text("Upload Shop Photos"),
+                                ),
+                              )
+                              : GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: _shopPhotos.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 8,
+                                      mainAxisSpacing: 8,
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                      ),
+                                itemBuilder:
+                                    (context, index) => Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          child: Image.file(
+                                            _shopPhotos[index],
+                                            height: 80,
+                                            width: 80,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 2,
+                                          right: 2,
+                                          child: GestureDetector(
+                                            onTap: () => _deletePhoto(index),
+                                            child: Container(
+                                              padding: EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                              ),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
@@ -247,7 +279,9 @@ class _ShopOwnerSignInState extends State<ShopOwnerSignIn> {
                           // Then navigate to the Home screen
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeView()),
+                            MaterialPageRoute(
+                              builder: (context) => DashboardView(),
+                            ),
                           );
                         },
                         child: Text(
