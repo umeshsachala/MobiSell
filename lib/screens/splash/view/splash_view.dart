@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobisell/splash/view_model/splash_view_model.dart';
+import 'package:mobisell/screens/splash/view_model/splash_view_model.dart';
 import 'package:mobisell/utils/app_colors/app_colors.dart';
 import 'package:mobisell/utils/local_images/local_images.dart';
 import 'package:provider/provider.dart';

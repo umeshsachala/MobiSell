@@ -41,6 +41,8 @@ dependencies:
   another_flushbar: ^1.12.30
   image_picker: ^1.1.2
   permission_handler: ^11.4.0
+  google_maps_flutter: ^2.12.1
+  url_launcher: ^6.3.1
 
 
 

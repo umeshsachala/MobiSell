@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobisell/utils/app_strings/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:mobisell/utils/app_colors/app_colors.dart';
 import 'package:mobisell/utils/text_style/text_style.dart';
 import 'package:mobisell/utils/common_widgets/common_button.dart';
+import 'package:mobisell/screens/coustmer/bottom_nav/customer_bottom_nav.dart';
 
 import 'login_view_model.dart';
 
@@ -19,6 +21,10 @@ class LoginView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        title: const Text('Customer Login'),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -37,10 +43,9 @@ class LoginView extends StatelessWidget {
                 ),
               ),
               SizedBox(height: size.height * 0.02),
-              Text(AppStrings.welcomeback,
-                style: CommonStyle.getInterFont(
-                  fontSize: size.width * 0.04,
-                ),
+              Text(
+                AppStrings.welcomeback,
+                style: CommonStyle.getInterFont(fontSize: size.width * 0.04),
               ),
               SizedBox(height: size.height * 0.04),
               TextField(
@@ -68,13 +73,42 @@ class LoginView extends StatelessWidget {
                 textColor: AppColors.white,
                 fontSize: size.width * 0.04,
                 fontWeight: FontWeight.w600,
-                onPressed: () => viewModel.navigateToHome(),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CustomerBottomNav(),
+                    ),
+                  );
+                },
               ),
               SizedBox(height: padding.bottom + size.height * 0.02),
+              RichText(
+                text: TextSpan(
+                  text: 'Already have an account? ',
+                  style: CommonStyle.getInterFont(
+                    color: AppColors.black,
+                    fontSize: 18,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Sign up',
+                      style: CommonStyle.getInterFont(
+                        color: AppColors.orange,
+                        fontSize: 18,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () {},
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-} 
+}
